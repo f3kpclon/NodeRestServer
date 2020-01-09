@@ -2,20 +2,33 @@ const express = require('express');
 const app = express();
 const Usuario = require('../models/usuarioDB');
 const bicrypt = require('bcryptjs');
-const bodyParser = require('body-parser');
+const { verifyToken, validateRole } = require('../middlawares/authentication')
 const _ = require('underscore');
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
 
-// parse application/json
-app.use(bodyParser.json())
 
-app.get('/', function (req, res) {
-    res.json('get INICIALIZACION!!');
+app.get('/usuario/find', verifyToken, (req, res) => {
+    let id = req.query.id
+
+    Usuario.findById(id, (err, userDB) => {
+        if (err) {
+            return res.status(404).json({
+                ok: false,
+                err: {
+                    message: `el usuario con id = ${id} no existe `
+                }
+            })
+        }
+
+        res.json({
+            ok: true,
+            usuario: userDB
+        })
+
+    })
 });
 
-app.get('/usuario', function (req, res) {
+app.get('/usuario', verifyToken, (req, res) => {
 
     let since = req.query.since || 0;
     since = Number(since);
@@ -52,7 +65,7 @@ app.get('/usuario', function (req, res) {
 
 });
 
-app.post('/usuario', function (req, res) {
+app.post('/usuario', [verifyToken, validateRole], (req, res) => {
 
     let body = req.body;
 
@@ -79,7 +92,7 @@ app.post('/usuario', function (req, res) {
 
 });
 
-app.put('/usuario/:id', function (req, res) {
+app.put('/usuario/:id', [verifyToken, validateRole], (req, res) => {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
@@ -100,7 +113,7 @@ app.put('/usuario/:id', function (req, res) {
 
 });
 
-app.delete('/usuario/:id', function (req, res) {
+app.delete('/usuario/:id', [verifyToken, validateRole], (req, res) => {
     let id = req.params.id;
 
     Usuario.findByIdAndRemove(id, (err, deletedUser) => {
