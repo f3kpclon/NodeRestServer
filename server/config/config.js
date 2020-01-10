@@ -6,7 +6,8 @@ process.env.EXP_TOKEN = 60 * 60 * 24;
 process.env.SEED = process.env.SEED || 'seed-desa';
 /**ENTORNO */
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
-
+/***CLIENT ID GOOGLE*/
+process.env.CLIENT_ID = process.env.CLIENT_ID || '776000195431-c77bdnkovcohnrgjf362terjefeop5d8.apps.googleusercontent.com';
 /**BASE DE DATOS */
 let urlDB;
 
