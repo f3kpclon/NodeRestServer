@@ -26,6 +26,7 @@
             auth2.signOut().then(function () {
                 console.log('User signed out.');
             });
+            return;
         }
     </script>
 
@@ -47,7 +48,7 @@
                 console.log('Signed in as: ' + xhr.responseText);
             };
             xhr.send('idtoken=' + id_token);
-
+            return;
         }
     </script>
 

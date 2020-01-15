@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.CLIENT_ID);
+const {CORS} = require('../middlawares/CORS');
 const app = express();
  
 
@@ -108,7 +109,8 @@ app.post('/google', async(req, res) => {
             } else {
                 let token = jwt.sign({
                     usuario: usuarioDB
-                }, process.env.SEED, { expiresIn: process.env.EXP_TOKEN });
+                }, 
+                process.env.SEED, { expiresIn: process.env.EXP_TOKEN });
 
 
                 return res.json({
@@ -140,7 +142,7 @@ app.post('/google', async(req, res) => {
 
                 let token = jwt.sign({
                     usuario: usuarioDB
-                }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
+                }, process.env.SEED, { expiresIn: process.env.EXP_TOKEN });
 
 
                 return res.json({

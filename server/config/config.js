@@ -1,6 +1,6 @@
 process.env.PORT = process.env.PORT || 3000;
 /**vencimiento de token */
-process.env.EXP_TOKEN = 60 * 60 * 24;
+process.env.EXP_TOKEN = '24h'; /*60 * 60 * 24*/;
 
 /**seed token */
 process.env.SEED = process.env.SEED || 'seed-desa';
