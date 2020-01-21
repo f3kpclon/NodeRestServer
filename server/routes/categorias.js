@@ -1,5 +1,5 @@
 const express = require('express');
-const { verifyToken, validateRole } = require('../middlawares/authentication');
+const { verifyToken, validateRole } = require('../middlewares/authentication');
 const Categoria = require('../models/categoriaDB');
 const app = express();
 

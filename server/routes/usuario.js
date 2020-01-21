@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const Usuario = require('../models/usuarioDB');
 const bicrypt = require('bcryptjs');
-const { verifyToken, validateRole } = require('../middlawares/authentication')
+const { verifyToken, validateRole } = require('../middlewares/authentication')
 const _ = require('underscore');
 
 

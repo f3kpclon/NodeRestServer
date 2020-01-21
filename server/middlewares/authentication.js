@@ -20,16 +20,34 @@ let verifyToken = (req, res, next) => {
 
 }
 
+let verifyTokenImg = (req, res, next)=>{
+    let token = req.query.token;
+
+    jwt.verify(token, process.env.SEED, (err, decoded)=>{
+        if (err) {
+            return res.status(401).json({
+                ok: false,
+                err: {
+                    message: 'Token no valido'
+                }
+            })
+        }
+
+        req.usuario = decoded.usuario
+        next()
+    })
+}
+
 let validateRole = (req, res, next) => {
 
     let role = req.usuario.role;
 
     if (role === "ADMIN_ROLE") {
         next()
-    }else{
+    } else {
         return res.status(401).json({
-            ok:false,
-            err:{
+            ok: false,
+            err: {
                 message: 'El usuario no tiene permisos para hacer modificaciones'
             }
         })
@@ -39,5 +57,6 @@ let validateRole = (req, res, next) => {
 
 module.exports = {
     verifyToken,
-    validateRole
+    validateRole,
+    verifyTokenImg
 }

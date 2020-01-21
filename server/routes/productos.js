@@ -1,5 +1,5 @@
 const express = require('express');
-const { verifyToken, validateRole } = require('../middlawares/authentication');
+const { verifyToken, validateRole } = require('../middlewares/authentication');
 const Producto = require('../models/productoDB');
 const app = express();
 
@@ -76,6 +76,7 @@ app.get('/productos/:id', verifyToken, (req, res) => {
 app.post('/productos', [verifyToken, validateRole], (req, res) => {
     
     let body = req.body;
+    
     let producto = new Producto({
         usuario: req.usuario._id,
         nombre: body.nombre,
